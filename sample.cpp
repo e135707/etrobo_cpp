@@ -77,7 +77,7 @@ TASK(TaskMain)
 			//turn_rotate = ( 375 - light.getBrightness() ) / 2;
 			//turn_rotate = ( color_ave - light.getBrightness() ) - nxt_motor_get_count(NXT_PORT_A);
                         color_num = light.getBrightness() - color_ave; //この値が大きいほど白によっており、少ないほど黒によっている。
-                        turn_rotate = color_num^3;
+                        turn_rotate = color_num * color_num * color_num;
                         
 				motorA.setPWM( turn_rotate ); //前輪
 				motorB.setPWM(-12); //左の後輪
