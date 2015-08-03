@@ -5,8 +5,6 @@ motorAは+で右回り-で左回り
 motorB,Cは-で直進
 motorB = 左
 motorC = 右
-6/23
-右旋回はほぼ完璧だが左旋回に少し難あり
 */
 
 // ECRobot++ API
@@ -49,12 +47,12 @@ static float pid_sample(float sensor_val);
 static float math_limit(float pid_val, float pid_min, float pid_max);
 
 float DELTA_T=0.005;
-float KP=0.01;
-float KI=0.01;
-float KD=0.01;
+float KP=0.10;
+float KI=0.02;
+float KD=0.03;
 float target_val=380; //光センサの目標値
 
-int threshold=380;
+int threshold=400;
 
 static float diff[2]; //"S32" 32bitのsinged(符号あり)整数型
 static float integral; //"F32" 32bitの浮動小数点型
@@ -67,7 +65,6 @@ TASK(TaskMain)
   Clock clock;
   Lcd lcd;
 
-  
   int angle = 0;
   
   motorA.reset();
@@ -97,12 +94,11 @@ TASK(TaskMain)
     lcd.putf("sdd",  "3/4: ", light.getBrightness(),0, sonar.getDistance(),5);
     lcd.disp();
 
-    clock.wait(5);//msec_0.005
+    clock.wait(5);//0.005_msec
   }
 }
 
 //line_inのとき左旋回
-//カラーセンサーの差分の値とflagの値で旋回角度を決める
 int Line_in(int angle){
     if(motorA.getCount() > -angle){
         motorA.setPWM(-100);
@@ -128,7 +124,6 @@ int Line_out(int angle){
       }
 }
 
-
 float pid_sample(float sensor_val){
     float p,i,d;
     
@@ -140,7 +135,7 @@ float pid_sample(float sensor_val){
     i = KI * integral;  
     d = KD * (diff[1] - diff[0]) / DELTA_T;
     
-    return math_limit(p + i + d, -100.0, 100.0);
+    return math_limit(p + i + d, -400.0, 400.0);
     }
     
 float math_limit(float pid_val, float pid_min, float pid_max)
@@ -152,6 +147,6 @@ float math_limit(float pid_val, float pid_min, float pid_max)
     }
     return pid_val;
 }
-    
+
 }
 //end
