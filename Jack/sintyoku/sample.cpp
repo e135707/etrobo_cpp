@@ -81,9 +81,6 @@ extern "C"
            lcd.putf("sn","center : Get max");
            lcd.putf("sn","right : Get min");
            lcd.putf("sdn",   "Brightness:",light.getBrightness(),0);
-       lcd.putf("sdn", "Rotation_A:", motorA.getCount(),0);
-       lcd.putf("sdn", "Rotation_B:", motorB.getCount(),0);
-       lcd.putf("sdn", "Rotation_C:", motorC.getCount(),0);
            lcd.disp();
           //タッチセンサーが押されたら、ループ処理を実行する。
           }else{
@@ -107,8 +104,6 @@ extern "C"
       lcd.clear();
 //各センサ・モータ類の値を常に画面に出力
            lcd.clear();
-       lcd.putf("sn","center : Get max");
-       lcd.putf("sn","right : Get min");
        lcd.putf("sdn",   "Brightness:",light.getBrightness(),0);
        lcd.putf("sdn", "Rotation_A:", motorA.getCount(),0);
        lcd.putf("sdn", "Rotation_B:", motorB.getCount(),0);
